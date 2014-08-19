@@ -1,0 +1,17 @@
+/home/takayuki/.rbenv/versions/1.9.3-p547/bin/ruby -r ./siteconf20140811-7977-14k1xp4.rb extconf.rb 
+checking for ruby/util.h... yes
+creating Makefile
+
+make  clean
+
+make
+compiling crypt.c
+compiling crypt_blowfish.c
+compiling bcrypt_ext.c
+compiling crypt_gensalt.c
+compiling wrapper.c
+linking shared-object bcrypt_ext.so
+
+make  install
+/usr/bin/install -c -m 0755 bcrypt_ext.so .gem.20140811-7977-g4e8c2
+installing default bcrypt_ext libraries

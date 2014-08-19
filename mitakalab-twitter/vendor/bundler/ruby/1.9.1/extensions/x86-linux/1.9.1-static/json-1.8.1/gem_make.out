@@ -1,0 +1,12 @@
+/home/takayuki/.rbenv/versions/1.9.3-p547/bin/ruby -r ./siteconf20140811-7977-1icaekv.rb extconf.rb 
+creating Makefile
+
+make  clean
+
+make
+compiling parser.c
+linking shared-object json/ext/parser.so
+
+make  install
+/usr/bin/install -c -m 0755 parser.so .gem.20140811-7977-3y93s/json/ext
+installing default parser libraries

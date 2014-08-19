@@ -1,0 +1,40 @@
+/home/takayuki/.rbenv/versions/1.9.3-p547/bin/ruby -r ./siteconf20140811-7977-1wekoxf.rb extconf.rb 
+checking for main() in -lpthread... yes
+creating Makefile
+
+make  clean
+
+make
+compiling message.cc
+compiling array.cc
+compiling init.cc
+compiling rr.cc
+compiling accessor.cc
+compiling constraints.cc
+compiling value.cc
+compiling function.cc
+compiling stack.cc
+compiling backref.cc
+compiling object.cc
+compiling primitive.cc
+compiling constants.cc
+compiling heap.cc
+compiling context.cc
+compiling external.cc
+compiling locker.cc
+compiling date.cc
+compiling template.cc
+compiling signature.cc
+compiling invocation.cc
+compiling gc.cc
+compiling v8.cc
+compiling string.cc
+compiling script.cc
+compiling exception.cc
+compiling handles.cc
+compiling trycatch.cc
+linking shared-object v8/init.so
+
+make  install
+/usr/bin/install -c -m 0755 init.so .gem.20140811-7977-9k24oq/v8
+installing default init libraries

@@ -1,0 +1,9 @@
+%h1 Admin::Base#index
+%p Find me in app/views/admin/base/index.html.haml !!!
+
+- if can? :admin, current_admin_user
+  %p admin read!!!
+
+- if can? :member, current_admin_user
+  %p member read!!!
+

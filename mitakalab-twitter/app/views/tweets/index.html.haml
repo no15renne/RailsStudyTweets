@@ -1,6 +1,6 @@
 %h1 #{current_admin_user.username}'s HOME
 
-%h2= link_to 'my page', 'show/' + current_admin_user.username
+%h2= link_to 'my page', "tweets/" + current_admin_user.id.to_s
 
 //- @follows.each do |f|
 //	%p= link_to f.username + "'s page", 'show/' + f.username

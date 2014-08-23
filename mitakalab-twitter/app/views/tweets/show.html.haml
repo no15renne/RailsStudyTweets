@@ -1,33 +1,33 @@
 %div{id: "wrapper"}
 	%h1 User page
-	- @username = params[:username]
+	-_username = @pageuser.id.to_s
 
 	%section{id: "content"}
 		%section{id: "left"}
-			%p User : #{@username}
+			%p User : #{@pageuser.username}
 			%p Current User : #{current_admin_user.username}
 
 			//%p user id : #{current_admin_user.id} or #{@userid}
-			%p= link_to 'HOME', '/tweets/index'
-			%p= link_to 'my page', '/tweets/show/' + current_admin_user.username
+			%p= link_to 'HOME', '/tweets'
+			%p= link_to 'my page', '/tweets/' + current_admin_user.id.to_s
 			%p= link_to 'log out', destroy_admin_user_session_path 
 
 			%h2{id: "not_open"} follow user's
 			%div
 				- @follows.each do |f|
-					%p= link_to f.username + "'s page", f.username
+					%p= link_to f.username + "'s page", f.id.to_s
 			%h2{id: "not_open"} All user's
 			%div
 				- @AllUsers.each do |u|
-					%p= link_to u.username + "'s page", u.username
+					%p= link_to u.username + "'s page", u.id.to_s
 		%section{id: "right"}
-			- if params[:username] == current_admin_user.username
-				%h2= link_to 'new tweet', '/tweets/new/'+ @username
+			- if _username == current_admin_user.id.to_s
+				%h2= link_to 'new tweet', 'new/'
 			- elsif @followed == false
-				%h2= link_to 'follow', '/tweets/create_follow/' + @username
+				%h2= link_to 'follow', '/tweets/create_follow/' + _username
 			- else
-				%h2= link_to 'remove follow', '/tweets/remove_follow/' + @username
+				%h2= link_to 'remove follow', '/tweets/remove_follow/' + _username
 
 			- @tweets.reverse_each do |tweet|
-				%h2{id: "open"} #{tweet.title}
+				%h2= tweet.title
 				%p= tweet.content

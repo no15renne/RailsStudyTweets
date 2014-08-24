@@ -6,13 +6,18 @@ get '/tweets' => 'tweets#index'
   devise_for :admin_users
  
 	resources :tweets
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
  # get 'tweets/index'
  # get 'tweets/show/:username' => "tweets#show"
  # get 'tweets/new/:username' => "tweets#new"
  # post "tweets/create/:username" => "tweets#create"
   get 'tweets/create_follow/:id' => 'tweets#create_follow'
   get 'tweets/remove_follow/:id' => 'tweets#remove_follow'
-  get 'users/show/:username' => "users#show"
+ # get 'users/show/:username' => "users#show"
 
 #404, 500
 #  get '*not_found' => 'application#routing_error'

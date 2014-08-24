@@ -1,0 +1,4 @@
+%h1 #{@pageuser.username}'s Follow List
+
+-@follows.each do |f|
+	%p= link_to f.username + "'s page", "/tweets/" + f.id.to_s

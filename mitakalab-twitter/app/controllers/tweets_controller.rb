@@ -3,38 +3,20 @@ before_filter :authenticate_admin_user!
 
   def index
     #followしてるすべてのユーザ情報一覧取得
-    _followidlist = Follow.where(userid: current_admin_user.id) 
-    @follows = []	#宣言してないと怒られる（もうちょい綺麗にしたい
-    _followidlist.each do |fi|
-      @follows.push(AdminUser.find(fi.followuserid))
-    end
-    
+		#AdminUserとTweetも1:多に紐付けたい
     @tweets = Tweet.where(userid: current_admin_user.id)
-    _followidlist.each do |fi|
-      @tweets += Tweet.where(userid: fi.followuserid)
+    current_admin_user.relationships.each do |f|
+      @tweets += Tweet.where(username: f.followed.username)
     end
-    #_followidlistが空だと.sort!でエラー(tweetsは空でもないのに謎
-    #そもそもsortするの時間かかるからOR使ってtweets取得したい
-    if _followidlist.exists? then @tweets.sort! end
-    #  redirect_to '/tweets/show/' + _username
+    if current_admin_user.relationships.exists? then @tweets.sort! end
   end
 
   def show
 		@pageuser = AdminUser.find(params[:id])
-    #AdminUser.where(username: params[:username])[0].id
     #(見ているページのユーザが)followしてるすべてのユーザ情報一覧取得
-    _pageuserfollowidlist = Follow.where(userid: @pageuser.id)
-    @follows = []
-    _pageuserfollowidlist.each do |fi|
-      @follows.push(AdminUser.find(fi.followuserid))
-    end
+		@followeds = @pageuser.relationships
+		@followers = @pageuser.reverse_relationships
 
-    #followしているかを@followedで管理(view側で使う
-    if Follow.exists?(:userid => current_admin_user.id, :followuserid => @pageuser.id) then
-      @followed = true;
-    else
-      @followed = false;
-    end
     #自分のtweet全入手
     @tweets = Tweet.where(userid: @pageuser.id)
 
@@ -48,17 +30,18 @@ before_filter :authenticate_admin_user!
   end
 
   def create_follow
-    @follow = Follow.new
-    @follow.userid = current_admin_user.id
-		@follow.followuserid = params[:id].to_i
-    @follow.save
+		_user = AdminUser.find(params[:id])
+		if current_admin_user.following?(_user) == false then
+			current_admin_user.follow!(_user)
+		end
     redirect_to '/tweets/' + params[:id]
   end
 
   def remove_follow
-    _followuserid = params[:id].to_i
-    _followid = Follow.find_by(userid: current_admin_user.id, followuserid: _followuserid)
-    Follow.delete(_followid.id)
+		_user = AdminUser.find(params[:id])
+		if current_admin_user.following?(_user) == true then
+    	current_admin_user.unfollow!(AdminUser.find(params[:id]))
+    end
     redirect_to '/tweets/' + params[:id]
   end
 

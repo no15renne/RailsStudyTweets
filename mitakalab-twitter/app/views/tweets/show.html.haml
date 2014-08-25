@@ -1,38 +1,34 @@
 %div{id: "wrapper"}
 	%h1 User page
-	-_userid = @pageuser.id.to_s
-
 	%section{id: "content"}
 		%section{id: "left"}
 			%p User : #{@pageuser.username}
 			%p Current User : #{current_admin_user.username}
 
 			//%p user id : #{current_admin_user.id} or #{@userid}
-			%p= link_to 'HOME', '/tweets'
-			%p= link_to 'my page', '/tweets/' + current_admin_user.id.to_s
+			%p= link_to 'HOME', tweets_path
+			%p= link_to 'my page', tweet_path(current_admin_user.id)
 			%p= link_to 'log out', destroy_admin_user_session_path
 
-			%h2{id: "not_open"} followed
-			%div
+			%h2{id: "not_open"} #{link_to "followed", admin_users_path + "/" + @pageuser.id.to_s + "/following"}
+			-#%div
 				- @followeds.each do |f|
-					-ff = f.followed
-					%p= link_to ff.username + "'s page", ff.id.to_s
-			%h2{id: "not_open"} follower
-			%div
+					%p= link_to f.username + "'s page", tweet_path(f.id)
+			%h2{id: "not_open"} #{link_to "follower", admin_users_path + "/" + @pageuser.id.to_s + "/followers"}
+			-#%div
 				- @followers.each do |f|
-					-ff = f.follower
-					%p= link_to ff.username + "'s page", ff.id.to_s
+					%p= link_to f.username + "'s page", tweet_path(f.id)
 			%h2{id: "not_open"} All user's
 			%div
 				- @AllUsers.each do |u|
-					%p= link_to u.username + "'s page", u.id.to_s
+					%p= link_to u.username + "'s page", tweet_path(u.id)
 		%section{id: "right"}
-			- if _userid == current_admin_user.id.to_s
-				%h2= link_to 'new tweet', 'new/'
+			- if @pageuser.id == current_admin_user.id
+				%h2= link_to 'new tweet', new_tweet_path
 			- elsif current_admin_user.following?(@pageuser) == false
-				%h2= link_to 'follow', 'create_follow/' + _userid
+				%h2= link_to 'follow', 'create_follow/' + @pageuser.id.to_s
 			- else
-				%h2= link_to 'remove follow', 'remove_follow/' + _userid
+				%h2= link_to 'remove follow', 'remove_follow/' + @pageuser.id.to_s
 
 			- @tweets.reverse_each do |tweet|
 				%h2= tweet.title

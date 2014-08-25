@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20140824021746) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
-    t.integer  "userid"
+    t.integer  "admin_user_id"
   end
 
   create_table "users", force: true do |t|

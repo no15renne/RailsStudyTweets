@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
 root 'tweets#index' # ログイン画面をルートにする
 get '/tweets' => 'tweets#index'
-#post 'devise/registarations/' => 'tweets#index'
-
   devise_for :admin_users
- 
-	resources :tweets
-  resources :users do
+	
+  resources :tweets
+  resources :admin_users do
     member do
       get :following, :followers
     end
@@ -20,8 +18,8 @@ get '/tweets' => 'tweets#index'
  # get 'users/show/:username' => "users#show"
 
 #404, 500
-#  get '*not_found' => 'application#routing_error'
-#  post '*not_found' => 'application#routing_error'
+  get '*not_found' => 'application#routing_error'
+  post '*not_found' => 'application#routing_error'
 
  # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

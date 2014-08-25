@@ -1,0 +1,7 @@
+%div{id: "wrapper"}
+  %h1 User follow page
+  %section{id: "content"}
+    %h2= link_to "my page", tweet_path(current_admin_user.id)
+    %h2 following
+    - @followeds.each do |f| 
+      %p= link_to f.username + "'s page", tweet_path(f.id)

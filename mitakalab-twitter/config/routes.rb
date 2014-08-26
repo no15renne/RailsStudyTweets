@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
-root 'tweets#index' # ログイン画面をルートにする
-get '/tweets' => 'tweets#index'
+  root 'tweets#index' # ログイン画面をルートにする
+  get '/tweets' => 'tweets#index'
   devise_for :admin_users
-	
-  resources :tweets
-  resources :admin_users do
+  
+  resources :tweets, :except => [:edit, :update, :destroy] do
+    #tweets/:id/...
+    member do
+      get :create_follow, :remove_follow 
+    end
+
+    #tweets/...
+    #collection do
+    #end
+  end
+  resources :admin_users, :only => [:index] do
     member do
       get :following, :followers
     end
@@ -13,8 +22,8 @@ get '/tweets' => 'tweets#index'
  # get 'tweets/show/:username' => "tweets#show"
  # get 'tweets/new/:username' => "tweets#new"
  # post "tweets/create/:username" => "tweets#create"
-  get 'tweets/create_follow/:id' => 'tweets#create_follow'
-  get 'tweets/remove_follow/:id' => 'tweets#remove_follow'
+ # get 'tweets/create_follow/:id' => 'tweets#create_follow'
+ # get 'tweets/remove_follow/:id' => 'tweets#remove_follow'
  # get 'users/show/:username' => "users#show"
 
 #404, 500

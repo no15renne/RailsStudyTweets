@@ -10,11 +10,11 @@
 			%p= link_to 'my page', tweet_path(current_admin_user.id)
 			%p= link_to 'log out', destroy_admin_user_session_path
 
-			%h2{id: "not_open"} #{link_to "followed", admin_users_path + "/" + @pageuser.id.to_s + "/following"}
+			%h2{id: "not_open"} #{link_to "followed", following_admin_user_path}
 			-#%div
 				- @followeds.each do |f|
 					%p= link_to f.username + "'s page", tweet_path(f.id)
-			%h2{id: "not_open"} #{link_to "follower", admin_users_path + "/" + @pageuser.id.to_s + "/followers"}
+			%h2{id: "not_open"} #{link_to "follower", followers_admin_user_path}
 			-#%div
 				- @followers.each do |f|
 					%p= link_to f.username + "'s page", tweet_path(f.id)
@@ -25,10 +25,10 @@
 		%section{id: "right"}
 			- if @pageuser.id == current_admin_user.id
 				%h2= link_to 'new tweet', new_tweet_path
-			- elsif current_admin_user.following?(@pageuser) == false
-				%h2= link_to 'follow', 'create_follow/' + @pageuser.id.to_s
+			- elsif current_admin_user.following?(@pageuser)
+				%h2= link_to 'remove follow', remove_follow_tweet_path
 			- else
-				%h2= link_to 'remove follow', 'remove_follow/' + @pageuser.id.to_s
+				%h2= link_to 'follow', create_follow_tweet_path
 
 			- @tweets.reverse_each do |tweet|
 				%h2= tweet.title

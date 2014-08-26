@@ -2,9 +2,6 @@
 
 %h2= link_to 'my page', tweet_path(current_admin_user.id)
 
-//- @follows.each do |f|
-//	%p= link_to f.username + "'s page", 'show/' + f.username
-
 - @tweets.reverse.each do |tweet|
 	%h2= tweet.title + '   :   ' + tweet.content
 	%p #{tweet.username} at #{tweet.created_at} id:#{tweet.id}

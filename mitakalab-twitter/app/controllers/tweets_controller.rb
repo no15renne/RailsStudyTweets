@@ -3,6 +3,8 @@ before_filter :authenticate_admin_user!
 
   def index
     #followしてるすべてのユーザ情報一覧取得
+		p 'current admin user is '
+		p current_admin_user
     @tweets = current_admin_user.followedtweet
   end
 

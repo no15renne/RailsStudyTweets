@@ -20,6 +20,11 @@ three@test.com
 のいずれかでログインpass共通でhogehoge
 もしくはユーザ登録(emailは別に使わないので適当に
 
+
+<Docker化>
+`docker build -t no15renne/twittertest .` を実行でDocker Imageが作成できる
+`docker run -d -p 3000:3000 no15renne/twittertest` で起動
+
 <概要>
 index
 	自分とフォローしているユーザのtweetを表示
